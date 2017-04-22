@@ -49,9 +49,9 @@ class GridWorld(Domain):
     #: Number of rows and columns of the map
     ROWS = COLS = 0
     #: Reward constants
-    GOAL_REWARD = +100
-    PIT_REWARD = -100
-    STEP_REWARD = -.01
+    GOAL_REWARD = +1
+    PIT_REWARD = -1
+    STEP_REWARD = -.001
     #: Set by the domain =min(100,rows*cols)
     episodeCap = None
     #: Movement Noise

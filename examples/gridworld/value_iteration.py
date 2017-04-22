@@ -22,7 +22,7 @@ def make_experiment(exp_id=1, path="./Results/Temp", show=False):
 
     # Domain:
     # MAZE                = '/Domains/GridWorldMaps/1x3.txt'
-    maze = os.path.join(GridWorld.default_map_dir, '4x5.txt')
+    maze = os.path.join(GridWorld.default_map_dir, 'large_state.txt')
     domain = GridWorld(maze, noise=0.3)
 
     # Representation
@@ -40,5 +40,5 @@ def make_experiment(exp_id=1, path="./Results/Temp", show=False):
 
 if __name__ == '__main__':
     path = "./Results/Temp/gridworld/ValueIteration/Tabular/"
-    experiment = make_experiment(1, path=path)
+    experiment = make_experiment(1, path=path, show=True)
     experiment.run()

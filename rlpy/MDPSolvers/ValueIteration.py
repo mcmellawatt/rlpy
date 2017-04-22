@@ -104,7 +104,8 @@ class ValueIteration(MDPSolver):
 
             # Show the domain and value function
             if self.show:
-                self.domain.show(a, s=s, representation=self.representation)
+                self.domain.showDomain(s=s, filename="value")
+                self.domain.showLearning(self.representation, filename="value")
 
             # store stats
             self.result["bellman_updates"].append(bellmanUpdates)

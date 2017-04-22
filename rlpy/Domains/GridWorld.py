@@ -49,10 +49,10 @@ class GridWorld(Domain):
     #: Number of rows and columns of the map
     ROWS = COLS = 0
     #: Reward constants
-    GOAL_REWARD = +1
-    PIT_REWARD = -1
-    STEP_REWARD = -.001
-    #: Set by the domain = min(100,rows*cols)
+    GOAL_REWARD = +100
+    PIT_REWARD = -100
+    STEP_REWARD = -.01
+    #: Set by the domain =min(100,rows*cols)
     episodeCap = None
     #: Movement Noise
     NOISE = 0
@@ -89,18 +89,18 @@ class GridWorld(Domain):
         # 2*self.ROWS*self.COLS, small values can cause problem for some
         # planning techniques
         if not self.episodeCap:
-            self.episodeCap = 1000
+            self.episodeCap = 50000
         else:
             self.episodeCap = episodeCap
         super(GridWorld, self).__init__()
 
-    def showDomain(self, a=0, s=None):
+    def showDomain(self, a=0, s=None, filename=""):
         if s is None:
             s = self.state
 
         # Draw the environment
         if self.domain_fig is None:
-            self.agent_fig = plt.figure("Domain")
+            self.agent_fig = plt.figure("Domain",figsize=(40,40))
             self.domain_fig = plt.imshow(
                 self.map,
                 cmap='GridWorld',
@@ -117,7 +117,7 @@ class GridWorld(Domain):
                    markersize=20.0 - self.COLS)
             plt.show()
         self.agent_fig.pop(0).remove()
-        self.agent_fig = plt.figure("Domain")
+        self.agent_fig = plt.figure("Domain",figsize=(40,40))
         #mapcopy = copy(self.map)
         #mapcopy[s[0],s[1]] = self.AGENT
         # self.domain_fig.set_data(mapcopy)
@@ -128,10 +128,11 @@ class GridWorld(Domain):
                'k>',
                markersize=20.0 - self.COLS)
         plt.draw()
+        plt.savefig(filename + 'performance.jpg')
 
-    def showLearning(self, representation):
+    def showLearning(self, representation, filename=""):
         if self.valueFunction_fig is None:
-            plt.figure("Value Function")
+            plt.figure("Value Function", figsize=(40,40))
             self.valueFunction_fig = plt.imshow(
                 self.map,
                 cmap='ValueFunction',
@@ -218,7 +219,7 @@ class GridWorld(Domain):
                 width=ARROW_WIDTH)
             self.rightArrows_fig.set_clim(vmin=0, vmax=1)
             plt.show()
-        plt.figure("Value Function")
+        plt.figure("Value Function", figsize=(40,40))
         V = np.zeros((self.ROWS, self.COLS))
         # Boolean 3 dimensional array. The third array highlights the action.
         # Thie mask is used to see in which cells what actions should exist
@@ -297,6 +298,7 @@ class GridWorld(Domain):
         C  = np.ma.masked_array(arrowColors[:, :, 3], mask=Mask[:,:, 3])
         self.rightArrows_fig.set_UVC(DY, DX, C)
         plt.draw()
+        plt.savefig(filename + 'learning2.jpg')
 
     def step(self, a):
         r = self.STEP_REWARD

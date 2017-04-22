@@ -1,7 +1,6 @@
 import rlpy.Tools.results as rt
 
-paths = {"RBFs": "./Results/Tutorial/InfTrackCartPole/RBFs",
-         "Tabular": "./Results/Tutorial/InfTrackCartPole/Tabular"}
+paths = {"Tabular": "./Results/Tutorial/gridworld-qlearning"}
 
 merger = rt.MultiExperimentResults(paths)
 fig = merger.plot_avg_sem("learning_steps", "return")

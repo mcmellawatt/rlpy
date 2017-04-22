@@ -24,14 +24,14 @@ def make_experiment(exp_id=1, path="./Results/Temp"):
     opt = {}
     opt["path"] = path
     opt["exp_id"] = exp_id
-    opt["max_steps"] = 100000
-    opt["num_policy_checks"] = 10
+    opt["max_steps"] = 10000000
+    opt["num_policy_checks"] = 50
 
     # Logging
 
     # Domain:
     # MAZE                = '/Domains/GridWorldMaps/1x3.txt'
-    maze = os.path.join(GridWorld.default_map_dir, '4x5.txt')
+    maze = os.path.join(GridWorld.default_map_dir, 'large_state.txt')
     domain = GridWorld(maze, noise=0.3)
     opt["domain"] = domain
 
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     experiment = make_experiment(1, path=path)
     experiment.run(visualize_steps=False,  # should each learning step be shown?
                    visualize_learning=True,  # show performance runs?
-                   visualize_performance=True)  # show value function?
+                   visualize_performance=False)  # show value function?
     experiment.plot()
     experiment.save()

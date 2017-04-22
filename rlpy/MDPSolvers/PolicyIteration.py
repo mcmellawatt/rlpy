@@ -116,10 +116,10 @@ class PolicyIteration(MDPSolver):
 
             # Show Plots
             if self.show:
-                self.domain.show(
-                                 policy.pi(s, False, possible_actions),
-                                 self.representation,
-                                 s=s)
+                self.domain.showDomain(s=s, filename="policy")
+                self.domain.showLearning(self.representation, filename="policy")
+
+
         return converged
 
     def policyImprovement(self, policy):

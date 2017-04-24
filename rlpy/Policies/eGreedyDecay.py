@@ -10,33 +10,43 @@ __license__ = "BSD 3-Clause"
 __author__ = "Alborz Geramifard"
 
 
-class eGreedy(Policy):
+class eGreedyDecay(Policy):
     """ Greedy policy with epsilon-probability for uniformly random exploration.
 
     From a given state, it selects the action with the highest expected value
-    (greedy with respect to value function), but with some probability 
+    (greedy with respect to value function), but with some probability
     ``epsilon``, takes a random action instead.
-    This explicitly balances the exploration/exploitation tradeoff, and 
+    This explicitly balances the exploration/exploitation tradeoff, and
     ensures that in the limit of infinite samples, the agent will
     have explored the entire domain.
 
     """
     # Probability of selecting a random action instead of greedy
-    epsilon         = 0.0
+    epsilonInit = None
+    epsilon = None
+    epsilonMin = 0.05
+    count = 0
+
     # Temporarily stores value of ``epsilon`` when exploration disabled
     old_epsilon     = None
     # This boolean variable is used to avoid random selection among actions
     # with the same values
     forcedDeterministicAmongBestActions = None
 
-    def __init__(self, representation, epsilon = .1,
+    def __init__(self, representation, epsilonInit = .9,
                  forcedDeterministicAmongBestActions = False, seed=1):
-        self.epsilon = epsilon
+        self.epsilonInit = epsilonInit
+        self.epsilon = epsilonInit
         self.forcedDeterministicAmongBestActions = forcedDeterministicAmongBestActions
-        super(eGreedy, self).__init__(representation,seed)
-
+        super(eGreedyDecay, self).__init__(representation,seed)
+d
     def pi(self, s, terminal, p_actions):
         coin = self.random_state.rand()
+        self.count += 1
+
+        if self.epsilon > self.epsilonMin:
+            self.epsilon = self.epsilonInit/(1+0.000001*self.count)
+
         # print "coin=",coin
         if coin < self.epsilon:
             return self.random_state.choice(p_actions)

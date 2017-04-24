@@ -21,7 +21,7 @@ def make_experiment(exp_id=1, path="./Results/Temp", show=False):
 
     # Domain:
     # MAZE                = '/Domains/GridWorldMaps/1x3.txt'
-    maze = os.path.join(GridWorld.default_map_dir, '6x9-Wall.txt')
+    maze = os.path.join(GridWorld.default_map_dir, 'large_state.txt')
     domain = GridWorld(maze, noise=0.3)
 
     # Representation

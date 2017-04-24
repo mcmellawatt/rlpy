@@ -49,8 +49,8 @@ class GridWorld(Domain):
     #: Number of rows and columns of the map
     ROWS = COLS = 0
     #: Reward constants
-    GOAL_REWARD = +1
-    PIT_REWARD = -1
+    GOAL_REWARD = +100
+    PIT_REWARD = -100
     STEP_REWARD = -.001
     #: Set by the domain =min(100,rows*cols)
     episodeCap = None
@@ -298,7 +298,7 @@ class GridWorld(Domain):
         C  = np.ma.masked_array(arrowColors[:, :, 3], mask=Mask[:,:, 3])
         self.rightArrows_fig.set_UVC(DY, DX, C)
         plt.draw()
-        plt.savefig(filename + 'learning2.jpg')
+        plt.savefig(filename + 'learning.jpg')
 
     def step(self, a):
         r = self.STEP_REWARD

@@ -5,7 +5,7 @@ __author__ = "William Dabney"
 from rlpy.Domains import GridWorld
 from rlpy.Agents import Q_Learning
 from rlpy.Representations import iFDDK, IndependentDiscretization
-from rlpy.Policies import eGreedy
+from rlpy.Policies import eGreedyDecay
 from rlpy.Experiments import Experiment
 import os
 
@@ -24,14 +24,14 @@ def make_experiment(exp_id=1, path="./Results/Temp"):
     opt = {}
     opt["path"] = path
     opt["exp_id"] = exp_id
-    opt["max_steps"] = 2000000
+    opt["max_steps"] = 10000000
     opt["num_policy_checks"] = 50
 
     # Logging
 
     # Domain:
     # MAZE                = '/Domains/GridWorldMaps/1x3.txt'
-    maze = os.path.join(GridWorld.default_map_dir, '6x9-Wall.txt')
+    maze = os.path.join(GridWorld.default_map_dir, 'large_state.txt')
     domain = GridWorld(maze, noise=0.3)
     opt["domain"] = domain
 
@@ -48,7 +48,7 @@ def make_experiment(exp_id=1, path="./Results/Temp"):
                           lambda_=lambda_)
 
     # Policy
-    policy = eGreedy(representation, epsilon=0.1)
+    policy = eGreedyDecay(representation, epsilonInit=0.9)
 
     # Agent
     opt["agent"] = Q_Learning(
